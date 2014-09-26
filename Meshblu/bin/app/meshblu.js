@@ -1,21 +1,6 @@
-// Copyright 2014 Splunk, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License"): you may
-// not use this file except in compliance with the License. You may obtain
-// a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-// License for the specific language governing permissions and limitations
-// under the License.
-
 (function() {
     var fs              = require("fs");
     var path            = require("path");
-    var GithubAPI       = require("github");
     var splunkjs        = require("splunk-sdk");
     var Async           = splunkjs.Async;
     var ModularInputs   = splunkjs.ModularInputs;
@@ -48,34 +33,56 @@
     }
 
     exports.getScheme = function() {
-        var scheme = new Scheme("Github Commits");
+        var scheme = new Scheme("Meshblu");
 
-        scheme.description = "Streams events of commits in the specified Github repository (must be public, unless setting a token).";
+        scheme.description = "Streams events from a Meshblu Instance";
         scheme.useExternalValidation = true;
         scheme.useSingleInstance = false; // Set to false so an input can have an optional interval parameter.
 
         scheme.args = [
             new Argument({
-                name: "owner",
+                name: "meshblu_server",
                 dataType: Argument.dataTypeString,
-                description: "Github user or organization that created the repository.",
+                description: "The Meshblu Server to connect to",
                 requiredOnCreate: true,
                 requiredOnEdit: false
             }),
             new Argument({
-                name: "repository",
+                name: "server_uuid",
                 dataType: Argument.dataTypeString,
-                description: "Name of a public Github repository, owned by the specified owner.",
+                description: "User UUID to connect to the server.",
                 requiredOnCreate: true,
                 requiredOnEdit: false
             }),
             new Argument({
-                name: "token",
+                name: "server_token",
                 dataType: Argument.dataTypeString,
-                description: "(Optional) A Github API access token. Required for private repositories (the token must have the 'repo' and 'public_repo' scopes enabled). Recommended to avoid Github's API limit, especially if setting an interval.",
+                description: "The Access token associated with the User UUID to permit access to the Meshblu Server",
+                requiredOnCreate: true,
+                requiredOnEdit: false
+            }),
+            new Argument({
+                name: "operation",
+                dataType: Argument.dataTypeString,
+                description: "The operation to perform from the API specification. Supported Operations are: subscribe, message, devices, localdevices, status, events",
+                requiredOnCreate: true,
+                requiredOnEdit: false
+            }),
+            new Argument({
+                name: "device_uuid",
+                dataType: Argument.dataTypeString,
+                description: "The Device UUID to query against. If the API supports wildcards, use *.",
+                requiredOnCreate: true,
+                requiredOnEdit: false
+            }),
+            new Argument({
+                name: "device_token",
+                dataType: Argument.dataTypeString,
+                description: "The device UUID for the following operations: subscribe, events.",
                 requiredOnCreate: false,
                 requiredOnEdit: false
-            })
+            }),
+
         ];
 
         return scheme;
