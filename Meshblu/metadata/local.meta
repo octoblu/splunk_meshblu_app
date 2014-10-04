@@ -1,0 +1,14 @@
+[commands/blu]
+access = read : [ * ], write : [ * ]
+export = system
+owner = nobody
+version = 6.1.0
+modtime = 1412076950.742191000
+
+[app/install/is_configured]
+version = 6.1.0
+modtime = 1412100934.522411000
+
+[blusetup/config]
+version = 6.1.0
+modtime = 1412100934.160224000

@@ -1,0 +1,7 @@
+<setup>
+	<block title="Authentication" endpoint="meshbluep/config" entity="config">
+		<input field="meshblu_server"><label>Enter the server with port (server:port)</label><type>text</type></input>
+		<input field="server_uuid"><label>The UUID to connect with</label><type>text</type></input>
+		<input field="server_token"><label>The Token for the corresponding UUID</label><type>text</type></input>
+	</block>
+</setup>
