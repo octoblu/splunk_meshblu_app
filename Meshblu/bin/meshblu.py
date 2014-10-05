@@ -6,6 +6,9 @@ import logging
 import urllib2
 import json, datetime
 import sched, time
+from datetime import datetime, date, time
+from time import gmtime, strftime, localtime,mktime
+
 import splunk.entity as entity
 
 #set up logging suitable for splunkd comsumption
@@ -94,12 +97,14 @@ def validate_conf(config, key):
 def getCredentials(sessionKey):
 	myapp = 'Meshblu'
 	try:
-		entities = entity.getEntities(['meshbluep','config'], namespace=myapp, owner='nobody', sessionKey=sessionKey)
+		#entities = entity.getEntities(['meshbluep','config'], namespace=myapp, owner='nobody', sessionKey=sessionKey)
+		logging.info("placeholder")
 	except Exception, e:
 		raise Exception("Could not get %s credentials from splunk. Error: %s"
                       % (myapp, str(e)))
-	for i, c in entities.items():
-        	return c['meshblu_server'], c['server_uuid'], c['server_token']
+	#for i, c in entities.items():
+        #	return c['meshblu_server'], c['server_uuid'], c['server_token']
+	return "skynet.im:80", "5d6e9c91-820e-11e3-a399-f5b85b6b9fd0", "579nuups9k2lc8frglf6wnfwryue4s4i"
 	raise Exception("No credentials have been found")  
 
 #read XML configuration passed from splunkd
@@ -172,21 +177,6 @@ def validate_arguments():
     try:  
         if val_data["operation"] not in ["status", "mydevices", "messages"]:
                 raise Exception, "API Feature '%s' not supported"%str(val_data["operation"])
-        try: 
-            suuid = val_data["server_uuid"]
-            if None == suuid: raise Exception
-        except: raise Exception, "Must define Server UUID"
-
-        try:
-            suuid = val_data["server_token"]
-            if None == suuid: raise Exception
-        except: raise Exception, "Must define Server Token"
-
-        try:
-            suuid = val_data["meshblu_server"]
-            if None == suuid: raise Exception
-        except: raise Exception, "Must define Server"
-
 
     except Exception, e:
         print_error("Invalid configuration specified: %s" % str(e))
@@ -227,6 +217,10 @@ def end_stream():
     logging.debug("Ending Stream")
     doPrint("</stream>")
     
+def addStamp(json):
+	json["blutime"] = "%s"%(strftime("%a, %d %b %Y %H:%M:%S %Z", localtime()))
+	return json
+
 def run():
     """ The Main function that starts the action. The thread will sleep for however many seconds are configured via the Input. """
     sys.stdout = Unbuffered(sys.stdout)
@@ -251,8 +245,9 @@ def run():
          	do_event("%s"%(skynet.getStatus()),sourcetype,source)
          	do_done_event(sourcetype,source)
          elif (op == "mydevices"):
-                myDevices = skynet.getMyDevices()
-                do_event("%s"%myDevices,sourcetype,source)
+                myDevices = json.loads(skynet.getMyDevices())
+		for dev in myDevices["devices"]:
+               		do_event("%s"%(json.dumps(addStamp(dev))),sourcetype,source)
                 do_done_event(sourcetype,source)
          else:
                 raise Exception("API NOT DEFINED")

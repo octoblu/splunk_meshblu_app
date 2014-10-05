@@ -24,34 +24,40 @@ logging.root.addHandler(handler)
 ##  DEFAULTS = status _raw
 ##
 
-help = """------------------------------------------------------------------------------------
-MESHBLU HELP
-------------------------------------------------------------------------------------"""
-
-contexthelp = """------------------------------------------------------------------------------------
-MESHBLU HELP
-------------------------------------------------------------------------------------"""
-
-
-
 def blu(results, settings):
 	resultcount = len(results)
 	server, skynet_auth_uuid, skynet_auth_token = getCredentials(settings)
 	skynet = MeshbluAPI(server, skynet_auth_uuid, skynet_auth_token)
 	op = "status"
-	output_field = "meshblu_response"
+	uuid = None
+	payload = None
+	output_field = settings["output_field"]
+	uuid_field = settings["uuid_field"]
+	operation_field = settings["operation_field"]
+	payload_field = settings["payload_field"]
         for res in results:
-		op = res["operation"]
+		tmpResponse = None
+		if operation_field in res:
+			op = res[operation_field]
+		if uuid_field in res:
+			uuid = res[uuid_field]
+		if payload_field in res:
+			payload =json.loads(res[payload_field])
 		if op not in ['status', 'webhook', 'message']:
 			return splunk.Intersplunk.generateErrorResults("op=%s is not supported" % op)
 		if op == "status":
-			res[output_field] = skynet.getStatus()
+			tmpResponse = skynet.getStatus()
 		elif op == "mydevices":
-			res[output_field] = skynet.getMyDevices()
+			tmpResponse = skynet.getMyDevices()
 		elif op == "message":
-			res[output_field] = skynet.sendMessage(res["uuid"],res["payload"])
+			if uuid_field not in res or payload_field not in res:
+				return splunk.Intersplunk.generateErrorResults("payload and uuid must be defined for operation=%s"%op)
+			tmpResponse = skynet.sendMessage(uuid, payload)
 		elif op == "webhook":
-			res[output_field] = skynet.triggerWebhook(res["uuid"], res["payload"])
+                        if uuid_field not in res or payload_field not in res:
+                                return splunk.Intersplunk.generateErrorResults("payload and uuid must be defined for operation=%s"%op)
+			tmpResponse = skynet.triggerWebhook(uuid, payload)
+		res[output_field] = tmpResponse
 	return results
 
 results = []
@@ -63,22 +69,35 @@ def getCredentials(settings):
     
 try:
     # poor mans opt
+    # DEFAULTS
+    settings = dict()
+    settings["output_field"] = "meshblu_response"
+    settings["payload_field"] = "blu_payload"
+    settings["operation_field"] = "blu_operation"
+    settings["uuid_field"] = "blu_uuid"
     for a in sys.argv[1:]:
 
         # This (old) feature just put a 'help' header for people who don't know
         # how to read diff
         # Commenting out for now since the header has been put into the decorations stuff.
-        if a.startswith("op="):
+        if a.startswith("output_field="):
             where = a.find('=')
-            op = a[where+1:len(a)]
-
+            settings["output_field"] = a[where+1:len(a)]
+	elif a.startswith("payload_field="):
+		where = a.find('=')
+		settings["payload_field"] = a[where+1:len(a)]
+        elif a.startswith("operation_field="):
+                where = a.find('=')
+                settings["operation_field"] = a[where+1:len(a)]
+        elif a.startswith("uuid_field="):
+                where = a.find('=')
+                settings["uuid_field"] = a[where+1:len(a)]
         elif isgetinfo:
             splunk.Intersplunk.parseError("Invalid argument '%s'" % a)
 
     if isgetinfo:
         splunk.Intersplunk.outputInfo(False, False, True, False, None, False)
 
-    settings = dict()
     results = splunk.Intersplunk.readResults(settings=settings, has_header=True)
     results = blu(results, settings)
 

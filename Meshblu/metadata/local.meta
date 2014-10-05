@@ -12,3 +12,19 @@ modtime = 1412100934.522411000
 [blusetup/config]
 version = 6.1.0
 modtime = 1412100934.160224000
+
+[inputs/meshblu%3A%2F%2Fskynet_mydevices]
+version = 6.1.0
+modtime = 1412469360.624356000
+
+[views/my_devices]
+owner = admin
+version = 6.1.0
+modtime = 1412525490.134848000
+
+[html/my_devices]
+access = read : [ * ], write : [ admin ]
+export = system
+owner = admin
+version = 6.1.0
+modtime = 1412533743.772467000

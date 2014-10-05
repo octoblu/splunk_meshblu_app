@@ -1,0 +1,24 @@
+{
+  "name": "splunk_app_meshblu",
+  "version": "0.0.1",
+  "appPath": "public",
+  "keywords": [
+    "meshblu"
+  ],
+  "authors": [
+    "alacercogitatus"
+  ],
+  "license": "public",
+  "private": true,
+  "dependencies": {
+    "d3": "~3.4.11",
+    "nvd3": "~1.1.15-beta",
+    "lodash": "~2.4.1",
+    "angularjs-nvd3-directives": "latest",
+    "angular-route": "latest",
+    "angular": "latest"
+  },
+  "resolutions": {
+    "d3": "~3.4.8"
+  }
+}
