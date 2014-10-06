@@ -71,7 +71,7 @@ try:
     # poor mans opt
     # DEFAULTS
     settings = dict()
-    settings["output_field"] = "meshblu_response"
+    settings["output_field"] = "blu_response"
     settings["payload_field"] = "blu_payload"
     settings["operation_field"] = "blu_operation"
     settings["uuid_field"] = "blu_uuid"
