@@ -137,6 +137,7 @@ class MeshbluAPI:
         logging.debug("URL: %s"%url)
         method = "POST"
         d = urllib.urlencode(data)
+	d = json.dumps(data)
         urlRequest = urllib2.Request(url, d,self.conf["headers"])
         urlRequest.get_method = lambda: method
         return urllib2.urlopen(urlRequest)
