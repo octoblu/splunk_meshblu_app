@@ -35,6 +35,7 @@ def blu(results, settings):
 	uuid_field = settings["uuid_field"]
 	operation_field = settings["operation_field"]
 	payload_field = settings["payload_field"]
+	wait_time = settings["wait"]
         for res in results:
 		tmpResponse = None
 		if operation_field in res:
@@ -58,6 +59,8 @@ def blu(results, settings):
                                 return splunk.Intersplunk.generateErrorResults("payload and uuid must be defined for operation=%s"%op)
 			tmpResponse = skynet.triggerWebhook(uuid, payload)
 		res[output_field] = tmpResponse
+		if (wait_time > 0):
+			time.sleep(wait_time)
 	return results
 
 results = []
@@ -75,6 +78,7 @@ try:
     settings["payload_field"] = "blu_payload"
     settings["operation_field"] = "blu_operation"
     settings["uuid_field"] = "blu_uuid"
+    settings["wait"] = 0
     for a in sys.argv[1:]:
 
         # This (old) feature just put a 'help' header for people who don't know
