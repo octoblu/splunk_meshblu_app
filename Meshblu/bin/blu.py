@@ -96,6 +96,9 @@ try:
         elif a.startswith("uuid_field="):
                 where = a.find('=')
                 settings["uuid_field"] = a[where+1:len(a)]
+	elif a.startswith("wait="):
+		where = a.find('=')
+		settings["wait"] = a[where+1:len(a)]
         elif isgetinfo:
             splunk.Intersplunk.parseError("Invalid argument '%s'" % a)
 
