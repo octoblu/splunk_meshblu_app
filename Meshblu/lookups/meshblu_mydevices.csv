@@ -4,7 +4,7 @@ null,arduino,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",arduino,device,"a587eb
 "184.98.242.118",home,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,gateway,"feadee3e-7cb5-4fb5-93bd-1bcdba8de1c5",c1b066c28d1f4a4aa42b53fe514519d
 "70.171.192.231",firmwaretest,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,,"26cc6770-b9eb-11e3-a3c6-0b41aaf824e3",g9ydhs699d9ozuxrwgrt1ov52gap2e29
 "184.98.43.115",skynetsensor,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,,"613f8b90-c9a8-11e3-aa24-e1cb42c326cd",0b84dh9iedp0q9f6rcqub3kfuy0ysyvi
-"70.171.192.231",tessel,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",tessel,device,"d4d49501-f441-11e3-8737-039ac005852a",0s7d03t0nvtb7qfrgm0udcnuwc9xusor
+"70.171.192.231",tessel,true,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",tessel,device,"d4d49501-f441-11e3-8737-039ac005852a",0s7d03t0nvtb7qfrgm0udcnuwc9xusor
 "71.36.180.147",tuan,true,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",other,device,"d4df2fb1-fb0d-11e3-a290-ef9910e207d9",4j0d3cefe5m0wwmi4fdjkzphc83nb3xr
 "72.44.240.228",test,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,,"c33e14c0-fd55-11e3-a290-ef9910e207d9",0avr9lpll33w0cnmirsghi79omie8kt9
 "184.98.43.115",test2,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,,"f0af1a01-fd5d-11e3-a290-ef9910e207d9",0wyjcbbffnely2e29zuz9ygnoaymygb9
@@ -14,7 +14,7 @@ null,arduino,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",arduino,device,"a587eb
 "174.26.219.34",ok,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",other,device,"679717d1-05f1-11e4-afad-b385edf7dff5",jbpuay0afkulerk9b9eo38u4l0kep14i
 "72.44.240.228","SMS(outbound)",false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,outboundSMS,"9dd49c91-078c-11e4-900d-a729bec7bfcf",v3pwpg5oo9ksxlxr3cfsmeuphzxv42t9
 "174.26.219.34",newpi,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",raspberrypi,device,"da2543c1-0926-11e4-bc5b-6f80edbe1aed",00ze3yaryb2y5jyvih5us1v4cifz85mi
-null,mydog,true,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",beaglebone,device,"aa4f9fe1-0ed7-11e4-ba98-ed547cf24cbd",zlolqmvobl8oajormboq7dvaq8kkpgb9
+"208.186.6.68",mydog,true,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",beaglebone,device,"aa4f9fe1-0ed7-11e4-ba98-ed547cf24cbd",zlolqmvobl8oajormboq7dvaq8kkpgb9
 null,"chris' dog",true,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",beaglebone,device,"cffe24a1-1378-11e4-a504-5b6c46ce5bac",09micx97s0639pb9isk0rfl835oskyb9
 "172.31.34.73",insms,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,inboundSMS,"7071a1e0-1389-11e4-a504-5b6c46ce5bac",w8vl7oicdqwd0a4izd1romlndc102j4i
 "174.26.219.34",,false,"5d6e9c91-820e-11e3-a399-f5b85b6b9fd0",,yo,"955ef631-173d-11e4-a76f-ef198c503315",8bktf6d2u1tyy14indyzh2r43oe9izfr

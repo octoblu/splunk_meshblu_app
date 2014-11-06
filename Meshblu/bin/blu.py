@@ -6,6 +6,7 @@ import urllib2, urllib
 import json
 import sched, time
 import csv
+from multiprocessing import Process
 
 from MeshbluClass import *
 
@@ -69,52 +70,53 @@ results = []
 def getCredentials(settings):
         myEnt = entity.getEntity('/meshbluep/config','config', namespace='Meshblu',sessionKey=settings['sessionKey'], owner='nobody')
         return myEnt.get('meshblu_server'), myEnt.get('server_uuid'), myEnt.get('server_token')
-    
-try:
-    # poor mans opt
-    # DEFAULTS
-    settings = dict()
-    settings["output_field"] = "blu_response"
-    settings["payload_field"] = "blu_payload"
-    settings["operation_field"] = "blu_operation"
-    settings["uuid_field"] = "blu_uuid"
-    settings["wait"] = 0
-    for a in sys.argv[1:]:
 
-        # This (old) feature just put a 'help' header for people who don't know
-        # how to read diff
-        # Commenting out for now since the header has been put into the decorations stuff.
-        if a.startswith("output_field="):
-            where = a.find('=')
-            settings["output_field"] = a[where+1:len(a)]
-	elif a.startswith("payload_field="):
-		where = a.find('=')
-		settings["payload_field"] = a[where+1:len(a)]
-        elif a.startswith("operation_field="):
-                where = a.find('=')
-                settings["operation_field"] = a[where+1:len(a)]
-        elif a.startswith("uuid_field="):
-                where = a.find('=')
-                settings["uuid_field"] = a[where+1:len(a)]
-	elif a.startswith("wait="):
-		where = a.find('=')
-		settings["wait"] = a[where+1:len(a)]
-        elif isgetinfo:
-            splunk.Intersplunk.parseError("Invalid argument '%s'" % a)
-
-    if isgetinfo:
-        splunk.Intersplunk.outputInfo(False, False, True, False, None, False)
-
-    results = splunk.Intersplunk.readResults(settings=settings, has_header=True)
-    results = blu(results, settings)
-
-except Exception, e:
-    import traceback
-    stack =  traceback.format_exc()
-    if isgetinfo:
-        splunk.Intersplunk.parseError(str(e))
-        
-    results = splunk.Intersplunk.generateErrorResults(str(e))
-    logger.warn("invalid arguments passed to 'blu' search operator. Traceback: %s" % stack)
-
-splunk.Intersplunk.outputResults(results)
+if __name__ == '__main__':    
+	try:
+	    # poor mans opt
+	    # DEFAULTS
+	    settings = dict()
+	    settings["output_field"] = "blu_response"
+	    settings["payload_field"] = "blu_payload"
+	    settings["operation_field"] = "blu_operation"
+	    settings["uuid_field"] = "blu_uuid"
+	    settings["wait"] = 0
+	    for a in sys.argv[1:]:
+	
+	        # This (old) feature just put a 'help' header for people who don't know
+	        # how to read diff
+	        # Commenting out for now since the header has been put into the decorations stuff.
+	        if a.startswith("output_field="):
+	            where = a.find('=')
+	            settings["output_field"] = a[where+1:len(a)]
+		elif a.startswith("payload_field="):
+			where = a.find('=')
+			settings["payload_field"] = a[where+1:len(a)]
+	        elif a.startswith("operation_field="):
+	                where = a.find('=')
+	                settings["operation_field"] = a[where+1:len(a)]
+	        elif a.startswith("uuid_field="):
+	                where = a.find('=')
+	                settings["uuid_field"] = a[where+1:len(a)]
+		elif a.startswith("wait="):
+			where = a.find('=')
+			settings["wait"] = a[where+1:len(a)]
+	        elif isgetinfo:
+	            splunk.Intersplunk.parseError("Invalid argument '%s'" % a)
+	
+	    if isgetinfo:
+	        splunk.Intersplunk.outputInfo(False, False, True, False, None, False)
+	
+	    results = splunk.Intersplunk.readResults(settings=settings, has_header=True)
+	    results = blu(results, settings)
+	
+	except Exception, e:
+	    import traceback
+	    stack =  traceback.format_exc()
+	    if isgetinfo:
+	        splunk.Intersplunk.parseError(str(e))
+	        
+	    results = splunk.Intersplunk.generateErrorResults(str(e))
+	    logger.warn("invalid arguments passed to 'blu' search operator. Traceback: %s" % stack)
+	
+	splunk.Intersplunk.outputResults(results)

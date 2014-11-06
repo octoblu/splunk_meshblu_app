@@ -19,9 +19,14 @@ skynet = MeshbluAPI(server, skynet_auth_uuid, skynet_auth_token)
 print skynet.getStatus()
 
 #print skynet.triggerWebhook("b7579f10-4a66-11e4-84f4-6953f0fa3715", {'on':"false"})
-print skynet.triggerWebhook("4aad52b0-4a66-11e4-821a-b90e9698087b", {'on':"false"});
-
-#print skynet.subscribe("a1d1825c-bc7a-48c7-9449-0d163a364bbf/8c60e857-3fa8-4a84-8c47-c4673cb01cbd");
+#print skynet.triggerWebhook("4aad52b0-4a66-11e4-821a-b90e9698087b", {'on':"false"});
+print "subscribing"
+f = skynet.subscribe("6fc8ff31-49d6-11e4-96b4-e5f83d8f2876")
+print "done sub"
+for line in f:
+	print "for line"
+	print line
+print f
 #print skynet.getDataDate("a1d1825c-bc7a-48c7-9449-0d163a364bbf/8c60e857-3fa8-4a84-8c47-c4673cb01cbd", "2014-10-01T00:00:00.000Z", "2014-10-01T00:05:00.000Z")
 print skynet.sendMessage("a1d1825c-bc7a-48c7-9449-0d163a364bbf/8c60e857-3fa8-4a84-8c47-c4673cb01cbd", {'on':"false"})
 #time.sleep(3)

@@ -7,11 +7,11 @@ modtime = 1412076950.742191000
 
 [app/install/is_configured]
 version = 6.1.0
-modtime = 1412628420.751627000
+modtime = 1412961381.444037000
 
 [blusetup/config]
 version = 6.1.0
-modtime = 1412628420.349847000
+modtime = 1412961381.104794000
 
 [inputs/meshblu%3A%2F%2Fskynet_mydevices]
 version = 6.1.0
@@ -28,3 +28,13 @@ export = system
 owner = admin
 version = 6.1.0
 modtime = 1412533743.772467000
+
+[inputs/meshblu%3A%2F%2Fheartrate]
+owner = admin
+version = 6.1.0
+modtime = 1412961131.115381000
+
+[inputs/meshblu%3A%2F%2Fmobiblu]
+owner = admin
+version = 6.1.0
+modtime = 1412961238.556936000

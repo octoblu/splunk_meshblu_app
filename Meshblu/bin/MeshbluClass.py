@@ -69,6 +69,7 @@ class MeshbluAPI:
     
     def __init__(self, server, skynet_auth_uuid, skynet_auth_token):
         """Construct an instance of the MeshbluAPI."""
+	logging.basicConfig(filename='./meshbluclass.log', level=logging.DEBUG)
         logging.debug("Setting INIT")
         self.conf["skynet_auth_uuid"] = skynet_auth_uuid
         self.conf["skynet_auth_token"] = skynet_auth_token
@@ -119,7 +120,7 @@ class MeshbluAPI:
     def triggerWebhook(self, uuid, payload):
 	logging.debug("Running Send web hook")
 	url = self.WEBHOOK_BASE + uuid
-        return self.__doAPICall(url, payload, False)
+        return self.__doAPICall(url, payload, False) 
 
     def __makeError(self,s):
         logging.debug("Making an Error")

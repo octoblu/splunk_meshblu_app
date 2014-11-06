@@ -62,7 +62,7 @@ SCHEME = """<scheme>
         <args>
             <arg name="operation">
                 <title>Endpoint Operation</title>
-                <description>What endpoint to use. Valid choices: mydevices, status, messages</description>
+                <description>What endpoint to use. Valid choices: mydevices, subscribe, status, messages</description>
             </arg>
             <arg name="device_uuid">
                 <title>Device UUID</title>
@@ -175,7 +175,7 @@ def get_validation_data():
 def validate_arguments():
     val_data = get_validation_data()
     try:  
-        if val_data["operation"] not in ["status", "mydevices", "messages"]:
+        if val_data["operation"] not in ["status", "mydevices", "messages", "subscribe"]:
                 raise Exception, "API Feature '%s' not supported"%str(val_data["operation"])
 
     except Exception, e:
@@ -249,6 +249,11 @@ def run():
 		for dev in myDevices["devices"]:
                		do_event("%s"%(json.dumps(addStamp(dev))),sourcetype,source)
                 do_done_event(sourcetype,source)
+         elif (op == "subscribe"):
+		f = skynet.subscribe(config["device_uuid"])
+		for l in f:
+			do_event("%s"%(l),sourcetype,source)
+		do_done_event(sourcetype,source)
          else:
                 raise Exception("API NOT DEFINED")
     except Exception, e: print_error("Exception in RunAPI call: %s"%e)
